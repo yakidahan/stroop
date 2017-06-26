@@ -43,6 +43,7 @@
          */
         data() {
             return {
+                storing: false,
                 screen: 'intro',
                 step: 0,
                 timer: 0,
@@ -106,22 +107,14 @@
 
                     if (e.keyCode === 49) {
                         if (this.option.color === '#e74c3c') {
-                            console.log('Correct');
-
                             this.options[this.step].status = 'Correct';
                         } else {
-                            console.log('Wrong');
-
                             this.options[this.step].status = 'Wrong';
                         }
                     } else if (e.keyCode === 50) {
                         if (this.option.color === '#2ecc71') {
-                            console.log('Correct');
-
                             this.options[this.step].status = 'Correct';
                         } else {
-                            console.log('Wrong');
-
                             this.options[this.step].status = 'Wrong';
                         }
                     }
@@ -137,6 +130,8 @@
                     this.step ++;
                     this.option = this.options[this.step];
                 } else {
+                    this.store();
+                    
                     console.log(this.options);
 
                     this.screen = 'end';
@@ -147,6 +142,24 @@
             replay() {
                 this.screen = 'intro';
                 this.step = 0;
+            },
+
+            store() {
+                this.storing = true;
+
+                axios.post('/api/test', this.options)
+                    .then(response => {
+                        this.storing = false;
+                    })
+                    .catch(error => {
+                        this.storing = false;
+
+                        if (error.response) {
+                            console.log(error.response.status);
+                        } else {
+                            console.log(error.message);
+                        }
+                    });
             }
         }
     }
