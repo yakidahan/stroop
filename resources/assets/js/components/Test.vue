@@ -100,18 +100,18 @@
             },
 
             down(e) {
-                if (e.keyCode === 49 || e.keyCode === 50) {
+                if (e.keyCode === 49 || e.keyCode === 50 || e.keyCode === 97 || e.keyCode === 98) {
                     let time = new Date() - this.timer;
 
                     this.options[this.step].time = time;
 
-                    if (e.keyCode === 49) {
+                    if (e.keyCode === 49 || e.keyCode === 97) {
                         if (this.option.color === '#e74c3c') {
                             this.options[this.step].status = 'Correct';
                         } else {
                             this.options[this.step].status = 'Wrong';
                         }
-                    } else if (e.keyCode === 50) {
+                    } else if (e.keyCode === 50 || e.keyCode === 98) {
                         if (this.option.color === '#2ecc71') {
                             this.options[this.step].status = 'Correct';
                         } else {
